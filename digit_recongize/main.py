@@ -26,16 +26,22 @@ class Net(nn.Module):
     def __init__(self):
         self.fc = [] # fully connected layer
         super().__init__() # the same as nn.Module.__init__()
-        for i in range(num_of_layer):
-            self.fc.append( nn.Linear(ls[i], ls[i+1]) ) # input,output # get the seeting of the layer
+        self.fc1 = nn.Linear(ls[0], ls[1])
+        self.fc2 = nn.Linear(ls[1], ls[2])
+        self.fc3 = nn.Linear(ls[2], ls[3])
+        self.fc4 = nn.Linear(ls[3], ls[4])
+
 
     def forward(self,x):
         # set activation function in the middle layer
-        for i in range(num_of_layer - 1 ):
-            x = F.relu( self.fc[i](x) )
-        x = self.fc[-1](x) # the last layer no need any activation function
+        x = F.relu( self.fc1(x) )
+        x = F.relu( self.fc2(x) )
+        x = F.relu( self.fc3(x) )
+        x = self.fc4(x)  # the last layer no need any activation function
         return F.log_softmax(x, dim=1) # (Qn) I don't understand what dim one is
+
 net = Net()
+print(net)
 #net( torch.rand([28*28]).view(-1,28*28) )
 optimizer  = optim.Adam(net.parameters(), lr=0.001) # para that do not adjust
 
