@@ -16,3 +16,9 @@ test = train = datasets.MNIST("",train=False, download=False,
 # lesses batches ==>less sample at a time > more optimizes times will do and the more general rule will be generated !!!
 trainset = torch.utils.data.DataLoader(train, batch_size=10, shuffle=True)
 testset = torch.utils.data.DataLoader(test, batch_size=10, shuffle=True)
+
+class Net(nn.Module):
+
+    def __init__(self):
+        
+        super().__init__()
