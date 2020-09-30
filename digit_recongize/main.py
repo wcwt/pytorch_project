@@ -20,7 +20,6 @@ trainset = torch.utils.data.DataLoader(train, batch_size=10, shuffle=True)
 testset = torch.utils.data.DataLoader(test, batch_size=10, shuffle=True)
 
 ls = [28*28, 64, 64, 64, 10] # layer_size
-num_of_layer = len(ls) - 1
 
 class Net(nn.Module):
     def __init__(self):
@@ -54,7 +53,7 @@ for epoch in range(EPOCHS):
         net.zero_grad()
         output = net(imgs.view(-1,28*28))
         # error handling
-        loss = F.nll_loss(output,y)
+        loss = F.nll_loss(output,labels)
         loss.backward() # magical
         optimizer.step()
     print(loss)
