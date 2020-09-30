@@ -3,9 +3,6 @@ import torchvision
 from torchvision import transforms,datasets
 import matplotlib.pyplot as plt
 
-import torch.nn as nn
-import torch.nn.functional as F
-
 train = datasets.MNIST("",train=True, download=True,
                         transform = transforms.Compose([transforms.ToTensor()]))
 
@@ -16,3 +13,14 @@ test = train = datasets.MNIST("",train=False, download=False,
 # lesses batches ==>less sample at a time > more optimizes times will do and the more general rule will be generated !!!
 trainset = torch.utils.data.DataLoader(train, batch_size=10, shuffle=True)
 testset = torch.utils.data.DataLoader(test, batch_size=10, shuffle=True)
+
+count = torch.zeros([10])
+
+
+for data in trainset:
+    for label in data[1]:
+        count[int(label)] += 1
+
+sum = sum(count)
+for i in range(len(count)):
+    print(f"{i}: {100*count[i]/sum}")
