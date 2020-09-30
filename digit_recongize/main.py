@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import torch.nn as nn
 import torch.nn.functional as F
 
+import torch.optim as optim
+
 train = datasets.MNIST("",train=True, download=True,
                         transform = transforms.Compose([transforms.ToTensor()]))
 
@@ -33,8 +35,14 @@ class Net(nn.Module):
             x = F.relu( self.fc[i](x) )
         x = self.fc[-1](x) # the last layer no need any activation function
         return F.log_softmax(x, dim=1) # (Qn) I don't understand what dim one is
-
 net = Net()
-X = torch.rand([28*28]).view(-1,28*28) # vire stand for unknown shape
-output = net(X)
-print(output)
+#net( torch.rand([28*28]).view(-1,28*28) )
+#optimizer  = optim.Adam(net.parameters(), lr=0.001) # para that do not adjust
+
+EPOCHS = 3
+
+for epoch in range(EPOCHS):
+    for data in trainset:
+        # data contains image,result
+        imgs,labels = data[0],data[1]
+        net.zero_grad()
