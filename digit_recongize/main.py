@@ -37,7 +37,7 @@ class Net(nn.Module):
         return F.log_softmax(x, dim=1) # (Qn) I don't understand what dim one is
 net = Net()
 #net( torch.rand([28*28]).view(-1,28*28) )
-#optimizer  = optim.Adam(net.parameters(), lr=0.001) # para that do not adjust
+optimizer  = optim.Adam(net.parameters(), lr=0.001) # para that do not adjust
 
 EPOCHS = 3
 
@@ -46,3 +46,9 @@ for epoch in range(EPOCHS):
         # data contains image,result
         imgs,labels = data[0],data[1]
         net.zero_grad()
+        output = net(imgs.view(-1,28*28))
+        # error handling
+        loss = F.nll_loss(output,y)
+        loss.backward() # magical
+        optimizer.step()
+    print(loss)
