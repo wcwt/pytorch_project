@@ -1,7 +1,7 @@
 import torch
 import torchvision
 from torchvision import transforms,datasets
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 import torch.nn as nn
 import torch.nn.functional as F
