@@ -16,8 +16,8 @@ test = train = datasets.MNIST("",train=False, download=False,
 # lesses batches ==>less sample at a time > more optimizes times will do and the more general rule will be generated !!!
 trainset = torch.utils.data.DataLoader(train, batch_size=10, shuffle=True)
 testset = torch.utils.data.DataLoader(test, batch_size=10, shuffle=True)
-pixels = 28*28
-ls = [pixels,64,64,64,10] # layer_size
+
+ls = [28*28, 64, 64, 64, 10] # layer_size
 num_of_layer = len(ls) - 1
 
 class Net(nn.Module):
@@ -32,7 +32,9 @@ class Net(nn.Module):
         for i in range(num_of_layer - 1 ):
             x = F.relu( self.fc[i](x) )
         x = self.fc[-1](x) # the last layer no need any activation function
-        return F.log_softmax(x, dim=1)
+        return F.log_softmax(x, dim=1) # (Qn) I don't understand what dim one is
 
 net = Net()
-print(net)
+X = torch.rand([28*28]).view(-1,28*28) # vire stand for unknown shape
+output = net(X)
+print(output)
