@@ -20,5 +20,4 @@ testset = torch.utils.data.DataLoader(test, batch_size=10, shuffle=True)
 class Net(nn.Module):
 
     def __init__(self):
-        
         super().__init__()
