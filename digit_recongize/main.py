@@ -43,7 +43,7 @@ net = Net()
 #net( torch.rand([28*28]).view(-1,28*28) )
 optimizer  = optim.Adam(net.parameters(), lr=0.001) # para that do not adjust
 
-"""
+
 EPOCHS = 3
 for epoch in range(EPOCHS):
     for data in trainset:
@@ -56,7 +56,7 @@ for epoch in range(EPOCHS):
         loss.backward() # magical
         optimizer.step()
     print(loss)
-"""
+
 correct = 0
 total = 0
 
@@ -64,8 +64,8 @@ with torch.no_grad():
     for data in trainset:
         imgs,labels = data[0],data[1]
         output = net(imgs.view(-1,28*28))
-        for i,predict in enumerate(output):
-            if torch.argmax(predict) == labels[i]
+        for i , predict in enumerate(output):
+            if (torch.argmax(predict) == labels[i]) :
                 correct += 1
             total += 1
-print(f"Accuracy : {correct*100/total}%)
+print(f"Accuracy : {correct*100/total}%")
