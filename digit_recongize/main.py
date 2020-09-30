@@ -2,7 +2,7 @@ import torch
 import torchvision
 from torchvision import transforms,datasets
 import matplotlib.pyplot as plt
-
+import pickle
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -56,6 +56,8 @@ for epoch in range(EPOCHS):
         loss.backward() # magical
         optimizer.step()
     print(loss)
+with open("moldel.pk","wb+") as f:
+    pickle.dump(output,f)
 
 correct = 0
 total = 0
