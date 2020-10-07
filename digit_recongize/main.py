@@ -43,7 +43,7 @@ net = Net()
 #net( torch.rand([28*28]).view(-1,28*28) )
 optimizer  = optim.Adam(net.parameters(), lr=0.001) # para that do not adjust
 
-"""
+#""" train package
 EPOCHS = 3
 for epoch in range(EPOCHS):
     for data in trainset:
@@ -58,9 +58,12 @@ for epoch in range(EPOCHS):
     print(loss)
 with open("moldel.pk","wb+") as f:
     pickle.dump(output,f)
-"""
+#"""
+
+""" load oackage
 with open("moldel.pk","rb") as f:
     output = pickle.load(f)
+"""
 correct = 0
 wrong = 0
 total = 0
@@ -72,10 +75,12 @@ with torch.no_grad():
         for i , predict in enumerate(output):
             if (torch.argmax(predict) == labels[i]) :
                 correct += 1
+            """
             else:
                 wrong += 1
                 if (wrong < 5):
                     plt.imshow(imgs.view([28,28]))
                     plt.show()
+            """
             total += 1
 print(f"Accuracy : {correct*100/total}%")
