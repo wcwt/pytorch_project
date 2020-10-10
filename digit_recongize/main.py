@@ -14,25 +14,6 @@ train = datasets.MNIST("",train=True, download=True,
 test = train = datasets.MNIST("",train=False, download=False,
                         transform = transforms.Compose([transforms.ToTensor()]))
 
-def result_test(model,inputset):
-    correct = 0
-    wrong = 0
-    total = 0
-    for data in inputset:
-        imgs,labels = data[0],data[1]
-        output = model(imgs.view(-1,28*28))
-        for i , predict in enumerate(output):
-            if (torch.argmax(predict) == labels[i]) :
-                correct += 1
-                if (correct < 5):
-                    print(torch.argmax(predict))
-                    plt.imshow(imgs[i].view([28,28]))
-                    plt.show()
-            else:
-                wrong += 1
-            total += 1
-    print(f"Accuracy : {correct*100/total}%")
-
 
 # batch_size ==> 10 sample at a time per model
 # lesses batches ==>less sample at a time > more optimizes times will do and the more general rule will be generated !!!
@@ -59,7 +40,7 @@ class Net(nn.Module):
         x = self.fc4(x)  # the last layer no need any activation function
         return F.log_softmax(x, dim=1) # (Qn) I don't understand what dim one is
 
-"""
+
 net = Net()
 optimizer  = optim.Adam(net.parameters(), lr=0.001) # para that do not adjust
 
@@ -78,16 +59,10 @@ for epoch in range(EPOCHS):
     print(loss)
 with open("moldel.pk","wb+") as f:
     pickle.dump(output,f)
-"""
 
-#""" load oackage
-with open("moldel.pk","rb") as f:
-    net = pickle.load(f)
-#"""
 
-result_test(net,trainset)
 
-"""
+
 with torch.no_grad():
     for data in trainset:
         imgs,labels = data[0],data[1]
@@ -103,4 +78,3 @@ with torch.no_grad():
                 wrong += 1
             total += 1
 print(f"Accuracy : {correct*100/total}%")
-"""
