@@ -5,8 +5,12 @@ import matplotlib.pyplot as plt
 import pickle
 import torch.nn as nn
 import torch.nn.functional as F
-
 import torch.optim as optim
+
+def plot(img_tensor,predict):
+    print(torch.argmax(predict))
+    plt.imshow(img_tensor.view([28,28]))
+    plt.show()
 
 train = datasets.MNIST("",train=True, download=True,
                         transform = transforms.Compose([transforms.ToTensor()]))
@@ -61,19 +65,17 @@ with open("moldel.pk","wb+") as f:
     pickle.dump(output,f)
 
 
-
-
 with torch.no_grad():
+    correct = 0
+    total = 0
+    wrong = 0
     for data in trainset:
         imgs,labels = data[0],data[1]
         output = net(imgs.view(-1,28*28))
         for i , predict in enumerate(output):
             if (torch.argmax(predict) == labels[i]) :
                 correct += 1
-                if (correct < 5):
-                    print(torch.argmax(predict))
-                    plt.imshow(imgs[i].view([28,28]))
-                    plt.show()
+                if (correct < 5):   plot(imgs[i],predict)
             else:
                 wrong += 1
             total += 1
